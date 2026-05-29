@@ -16,7 +16,7 @@ const labsData = [
     vulnType: "XSS",
     difficulty: "easy",
     description: "Inject unescaped client-side JavaScript payloads into a reflection mechanism. Evade browser limits, execute custom script operations in the DOM environment, and solve the challenge.",
-    docPath: "docs/sql-injection-guide.pdf", // Links to the common guide list
+    docPath: "docs/reflected-xss-guide.pdf", // Links to the common guide list
     labPath: "labs/reflected-xss/index.html"
   },
   {
@@ -25,7 +25,7 @@ const labsData = [
     vulnType: "IDOR",
     difficulty: "medium",
     description: "Insecure Direct Object Reference. Manipulate request account identifiers to read confidential client data without permission, retrieve target profile details, and extract the flag.",
-    docPath: "docs/sql-injection-guide.pdf", // Links to the common guide list
+    docPath: "docs/idor-guide.pdf",
     labPath: "labs/idor/index.html"
   }
 ];
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function updateProgressBadge() {
   let completed = 0;
   const flags = ["flag{login_bypass_success}", "flag{reflected_xss_solved}", "flag{idor_admin_profile_compromised}"];
-  
+
   flags.forEach(flag => {
     if (localStorage.getItem(flag) === "true") {
       completed++;
@@ -69,10 +69,10 @@ function renderLabs() {
   const filteredLabs = labsData.filter(lab => {
     // Difficulty Filter Check
     const matchesDifficulty = activeFilter === "all" || lab.difficulty === activeFilter;
-    
+
     // Search Query Check
     const term = searchQuery.toLowerCase().trim();
-    const matchesSearch = 
+    const matchesSearch =
       lab.title.toLowerCase().includes(term) ||
       lab.vulnType.toLowerCase().includes(term) ||
       lab.description.toLowerCase().includes(term) ||
@@ -122,7 +122,7 @@ function renderLabs() {
         </a>
       </div>
     `;
-    
+
     // Add custom style highlights if solved
     if (isSolved) {
       cardEl.style.borderColor = "var(--neon-green)";
@@ -172,7 +172,7 @@ function setupEventListeners() {
     btn.addEventListener("click", () => {
       filterButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      
+
       activeFilter = btn.getAttribute("data-difficulty");
       renderLabs();
     });
