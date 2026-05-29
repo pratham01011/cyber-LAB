@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDOR Profile Viewer - CyberGuard Labs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
+</head>
+<body>
+  <div class="lab-container">
+    <!-- Header -->
+    <header class="lab-header" id="idorHeader">
+      <div class="header-left">
+        <a href="../../index.html" class="btn-back" id="backToDashBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Dashboard
+        </a>
+        <h1 id="idorMainHeading">Insecure Direct Object Reference <span>(IDOR) Lab</span></h1>
+      </div>
+      <div class="header-actions">
+        <a href="../../docs/sql-injection-guide.pdf" target="_blank" class="btn btn-secondary" id="viewDocsBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          Read Documentation
+        </a>
+      </div>
+    </header>
+
+    <!-- Workspace -->
+    <main class="lab-workspace" id="idorWorkspace">
+      <!-- Warning Banner -->
+      <section class="banner banner-warning" id="eduBanner">
+        <div class="banner-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="banner-text">
+          <strong>EDUCATIONAL SIMULATION:</strong> This internal employee console interacts with a mock database backend. The authorization validation logic has been omitted, allowing direct query parameter modifications.
+        </div>
+      </section>
+
+      <!-- Grid -->
+      <div class="workspace-grid">
+        
+        <!-- Left: API Request Browser and active User Card -->
+        <section class="panel console-panel" id="idorConsolePanel">
+          <h2 class="panel-title" id="consolePanelTitle">API Request Console</h2>
+          <p class="panel-subtitle" id="consolePanelSubtitle">Interact with the internal employee profile database routing.</p>
+          
+          <!-- Mock Browser / URL Address Bar -->
+          <div class="browser-bar" id="mockBrowserBar">
+            <div class="browser-controls">
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+            </div>
+            <div class="url-input-wrapper">
+              <span class="url-method">GET</span>
+              <span class="url-domain">https://api.corp.local/v1/users/</span>
+              <input type="number" id="userIdParam" value="1001" min="1" max="9999" autocomplete="off">
+            </div>
+            <button class="btn btn-primary btn-send" id="sendApiRequestBtn">Send</button>
+          </div>
+
+          <!-- Active profile card mount -->
+          <div class="profile-card-container" id="profileCardWrapper">
+            <h4 class="section-tag">Rendered Profile Card</h4>
+            <div class="employee-card" id="employeeCard">
+              <div class="employee-header">
+                <div class="avatar" id="avatarImage">👤</div>
+                <div class="employee-title">
+                  <h3 id="profileName">Jane Doe</h3>
+                  <span id="profileRole" class="badge-role">System Auditor</span>
+                </div>
+              </div>
+              <div class="employee-body">
+                <div class="meta-field">
+                  <span class="meta-label">Employee ID:</span>
+                  <span class="meta-value" id="profileId">1001</span>
+                </div>
+                <div class="meta-field">
+                  <span class="meta-label">Secure Email:</span>
+                  <span class="meta-value" id="profileEmail">jane.doe@corp.local</span>
+                </div>
+                <div class="meta-field">
+                  <span class="meta-label">Permissions:</span>
+                  <span class="meta-value" id="profilePrivs" style="color: var(--neon-cyan);">Audit Access</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Box -->
+          <div class="info-card" id="idorInstructions" style="margin-top: 25px;">
+            <h4>Lab Objective</h4>
+            <p>
+              You are logged in as employee <strong>Jane Doe (ID: 1001)</strong>. The API accepts numerical direct parameters to index the users table without validating permissions. Modify the user endpoint parameters to locate the administrator account.
+            </p>
+            <div class="hint-box">
+              <strong>Hint:</strong> Common targets include admin accounts or default profiles. Try editing the User ID inside the address bar to <code class="neon-code">1337</code>!
+            </div>
+          </div>
+        </section>
+
+        <!-- Right: Raw API JSON Output & Captured Flags -->
+        <section class="panel backend-panel" id="idorBackendPanel">
+          <!-- JSON Response -->
+          <div class="api-response-container" id="responseBox">
+            <h3 class="panel-title flex-title" id="responseTitle">
+              API Server JSON Response
+              <span class="pulse-indicator success" id="apiStatus">200 OK</span>
+            </h3>
+            <div class="json-code-box" id="jsonCodeContainer">
+              <pre><code id="liveJsonResponse">{
+  "status": "success",
+  "data": {
+    "id": 1001,
+    "name": "Jane Doe",
+    "role": "System Auditor",
+    "email": "jane.doe@corp.local",
+    "privileges": "Audit Access"
+  }
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- Logs -->
+          <div class="terminal-container" id="terminalBox">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="terminal-title">API Server Log Pipeline</span>
+              <button class="btn-reset" id="resetLabBtn">Reset Lab</button>
+            </div>
+            <div class="terminal-body" id="terminalLogs">
+              <div class="log-line text-muted">[+] REST Router established at https://api.corp.local/</div>
+              <div class="log-line text-muted">[+] Current authorized session mapping active: [token_user_1001]</div>
+            </div>
+          </div>
+
+          <!-- Flag -->
+          <div class="flag-card hidden" id="flagDisplayCard" style="margin-top: 25px;">
+            <div class="flag-glow-bg"></div>
+            <div class="flag-content">
+              <div class="flag-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                  <line x1="4" y1="22" x2="4" y2="15"></line>
+                </svg>
+              </div>
+              <div class="flag-details">
+                <h4>IDOR Authorization Broken!</h4>
+                <p>Retrieved Admin profile metadata records. Flag captured:</p>
+                <div class="flag-input-group">
+                  <input type="text" id="flagValue" value="flag{idor_admin_profile_compromised}" readonly>
+                  <button class="btn btn-primary" id="copyFlagBtn">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="lab-footer" id="labFooter">
+      <p>&copy; 2026 CyberGuard Sandbox Labs. Strictly for defensive learning.</p>
+    </footer>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

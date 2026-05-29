@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Injection Bypass - CyberGuard Labs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
+</head>
+<body>
+  <div class="lab-container">
+    <!-- Lab Header -->
+    <header class="lab-header" id="labTopHeader">
+      <div class="header-left">
+        <a href="../../index.html" class="btn-back" id="backToDashBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Dashboard
+        </a>
+        <h1 id="labMainHeading">SQL Injection (SQLi) <span>Bypass Lab</span></h1>
+      </div>
+      <div class="header-actions">
+        <a href="../../docs/sql-injection-guide.pdf" target="_blank" class="btn btn-secondary" id="viewDocsBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          Read Documentation
+        </a>
+      </div>
+    </header>
+
+    <!-- Lab Content Area -->
+    <main class="lab-workspace" id="labWorkspaceArea">
+      
+      <!-- Educational Banner -->
+      <section class="banner banner-warning" id="eduBanner">
+        <div class="banner-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="banner-text">
+          <strong>EDUCATIONAL SIMULATION:</strong> This is a secure local sandbox environment. The SQL engine and database are mocked using client-side JavaScript to demonstrate parsing vulnerability concepts safely.
+        </div>
+      </section>
+
+      <!-- Layout Grid -->
+      <div class="workspace-grid">
+        
+        <!-- Left Column: Vuln Login Form -->
+        <section class="panel login-panel" id="loginFormPanel">
+          <h2 class="panel-title" id="loginPanelTitle">Administrator Portal</h2>
+          <p class="panel-subtitle" id="loginPanelSubtitle">Log in to control the system database parameters.</p>
+          
+          <form id="vulnerableLoginForm" onsubmit="return false;">
+            <div class="form-group" id="userGroup">
+              <label for="username">Username</label>
+              <input type="text" id="username" placeholder="e.g. admin" autocomplete="off">
+            </div>
+            
+            <div class="form-group" id="passGroup">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="••••••••" autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submitLoginBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0110 0v4"></path>
+              </svg>
+              Authenticate
+            </button>
+          </form>
+
+          <!-- Instructions Card -->
+          <div class="info-card" id="sqliInstructions">
+            <h4 id="infoCardTitle">Lab Objective</h4>
+            <p id="infoCardText">
+              The login query concatenates your inputs directly. Use the classic SQL logic bypass payload to force the query assessment to evaluate to <code class="neon-code">TRUE</code>.
+            </p>
+            <div class="hint-box" id="sqliHint">
+              <strong>Hint:</strong> Inject <code class="neon-code">' OR '1'='1</code> in the Username field and leave password blank, then watch the live SQL viewer!
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column: Interactive SQL and Terminal Viewer -->
+        <section class="panel visualizer-panel" id="dbVisualizerPanel">
+          <!-- Real-Time SQL Statement -->
+          <div class="sql-viewer-container" id="sqlViewerBox">
+            <h3 class="panel-title flex-title" id="sqlViewerTitle">
+              Simulated SQL Query
+              <span class="pulse-indicator" id="sqlQueryStatus">Waiting</span>
+            </h3>
+            <div class="sql-code-box" id="sqlCodeContainer">
+              <pre><code id="liveSqlQuery">SELECT * FROM users WHERE username = '<span class="sql-highlight" id="sqlUser"></span>' AND password = '<span class="sql-highlight" id="sqlPass"></span>';</code></pre>
+            </div>
+          </div>
+
+          <!-- Console Terminal Outputs -->
+          <div class="terminal-container" id="terminalBox">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="terminal-title">Database SQL Logs Console</span>
+              <button class="btn-reset" id="resetLabBtn" title="Reset Sandbox Console State">
+                Reset Lab
+              </button>
+            </div>
+            <div class="terminal-body" id="terminalLogs">
+              <div class="log-line text-muted">[+] Database engine initialized. Standing by...</div>
+              <div class="log-line text-muted">[+] Ready to intercept authentications.</div>
+            </div>
+          </div>
+
+          <!-- Captured Flag Card -->
+          <div class="flag-card hidden" id="flagDisplayCard">
+            <div class="flag-glow-bg"></div>
+            <div class="flag-content">
+              <div class="flag-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                  <line x1="4" y1="22" x2="4" y2="15"></line>
+                </svg>
+              </div>
+              <div class="flag-details">
+                <h4>Vulnerability Exploited Successfully!</h4>
+                <p>Login authentication bypassed. Retrieved flag:</p>
+                <div class="flag-input-group">
+                  <input type="text" id="flagValue" value="flag{login_bypass_success}" readonly>
+                  <button class="btn btn-primary" id="copyFlagBtn">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+    </main>
+
+    <footer class="lab-footer" id="labFooter">
+      <p>&copy; 2026 CyberGuard Sandbox Labs. Strictly for defensive learning.</p>
+    </footer>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

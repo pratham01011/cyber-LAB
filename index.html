@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberGuard - Web Security Labs Dashboard</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="An interactive, local sandbox learning dashboard for web security vulnerabilities including SQLi, Reflected XSS, and IDOR.">
+  <meta name="keywords"
+    content="web security, cybersecurity dashboard, SQL Injection sandbox, cross-site scripting lab, IDOR demonstration">
+  <meta name="author" content="CyberGuard">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Logo Icon -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="navbar" id="mainHeader">
+      <a href="index.html" class="brand" id="brandLink">
+        <img src="assets/images/logo.svg" alt="CyberGuard Logo" width="36" height="36" id="brandLogo">
+        <span class="brand-text" id="brandTitle">CyberGuard Labs</span>
+      </a>
+
+      <nav class="nav-links" id="mainNavigation">
+        <a href="index.html" class="nav-link active" id="navHome">Dashboard</a>
+      </nav>
+
+      <!-- Dashboard Interactive Stats -->
+      <div class="nav-stats" id="dashboardStats">
+        <div class="stat-badge" id="badgeTotal">
+          <div class="dot"></div>
+          <span id="badgeTotalText">Labs: 3</span>
+        </div>
+        <div class="stat-badge" id="badgeScore" style="border-color: rgba(16, 185, 129, 0.3);">
+          <span style="color: var(--neon-green);" id="badgeScoreText">Completed: <span
+              id="completedCount">0</span>/3</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Section -->
+    <main class="dashboard-main" id="dashboardContent">
+
+      <!-- Hero Header Section -->
+      <section class="hero-section" id="heroIntro">
+        <h2 id="heroTitle"><span>Web Security</span> Sandboxes</h2>
+        <p id="heroDescription">
+          Master web application security through safe, fully-simulated frontend laboratories. Learn vulnerability
+          concepts, execute payloads, and capture flags offline.
+        </p>
+      </section>
+
+      <!-- Search and Filters Section -->
+      <section class="controls-container" id="controlsPanel">
+        <!-- Search input -->
+        <div class="search-wrapper" id="searchContainer">
+          <input type="text" id="labSearch" placeholder="Search vulnerabilities, titles, difficulty..."
+            autocomplete="off">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            id="searchSvg">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+
+        <!-- Filter buttons -->
+        <div class="filter-wrapper" id="filterPanel">
+          <span class="filter-label" id="filterTitle">Difficulty:</span>
+          <button class="filter-btn active" data-difficulty="all" id="filterAll">All</button>
+          <button class="filter-btn" data-difficulty="easy" id="filterEasy">Easy</button>
+          <button class="filter-btn" data-difficulty="medium" id="filterMedium">Medium</button>
+          <button class="filter-btn" data-difficulty="hard" id="filterHard">Hard</button>
+        </div>
+      </section>
+
+      <!-- Lab Grid System -->
+      <section class="labs-grid" id="labsGrid">
+        <!-- Rendered dynamically by js/app.js -->
+      </section>
+    </main>
+
+    <!-- Footer Copyright -->
+    <footer class="footer" id="mainFooter">
+      <p id="footerCopy">&copy; 2026 <span>CyberGuard Labs</span>. Built strictly for secure educational demonstration
+        and learning.</p>
+    </footer>
+  </div>
+
+  <!-- Main JavaScript App -->
+  <script src="js/app.js"></script>
+</body>
+
+</html>
