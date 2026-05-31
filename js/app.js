@@ -47,12 +47,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Calculate and render progress from localStorage flags
+const labSolvedStorageKeys = {
+  "sql-injection": "lab.sql-injection.solved",
+  "reflected-xss": "lab.reflected-xss.solved",
+  "idor": "lab.idor.solved"
+};
+
+function getSolverStorageKey(labId) {
+  return labSolvedStorageKeys[labId] || labId;
+}
+
 function updateProgressBadge() {
   let completed = 0;
-  const flags = ["flag{login_bypass_success}", "flag{reflected_xss_solved}", "flag{idor_admin_profile_compromised}"];
+  const keys = Object.values(labSolvedStorageKeys);
 
-  flags.forEach(flag => {
-    if (localStorage.getItem(flag) === "true") {
+  keys.forEach(key => {
+    if (localStorage.getItem(key) === "true") {
       completed++;
     }
   });
@@ -149,14 +159,7 @@ function renderNoResults() {
 
 // Helper: Check if a lab is solved by ID
 function checkLabSolved(labId) {
-  if (labId === "sql-injection") {
-    return localStorage.getItem("flag{login_bypass_success}") === "true";
-  } else if (labId === "reflected-xss") {
-    return localStorage.getItem("flag{reflected_xss_solved}") === "true";
-  } else if (labId === "idor") {
-    return localStorage.getItem("flag{idor_admin_profile_compromised}") === "true";
-  }
-  return false;
+  return localStorage.getItem(getSolverStorageKey(labId)) === "true";
 }
 
 // Bind search and filter events

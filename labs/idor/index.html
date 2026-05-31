@@ -105,7 +105,8 @@
             <p>
               You are logged in as employee <strong>Jane Doe (ID: 1001)</strong>. The API accepts numerical direct parameters to index the users table without validating permissions. Modify the user endpoint parameters to locate the administrator account.
             </p>
-            <div class="hint-box">
+            <button class="btn btn-secondary" id="idorHintToggleBtn">Show Hint</button>
+            <div class="hint-box hidden" id="idorHint">
               <strong>Hint:</strong> Common targets include admin accounts or default profiles. Try editing the User ID inside the address bar to <code class="neon-code">1337</code>!
             </div>
           </div>

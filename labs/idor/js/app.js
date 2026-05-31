@@ -52,6 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const flagValue = document.getElementById("flagValue");
   const copyFlagBtn = document.getElementById("copyFlagBtn");
+  const idorHintToggleBtn = document.getElementById("idorHintToggleBtn");
+  const idorHint = document.getElementById("idorHint");
 
   // Initial load
   fetchProfileData(1001);
@@ -68,6 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchProfileData(id);
     }
   });
+
+  if (idorHintToggleBtn && idorHint) {
+    idorHintToggleBtn.addEventListener("click", () => {
+      const hidden = idorHint.classList.toggle("hidden");
+      idorHintToggleBtn.textContent = hidden ? "Show Hint" : "Hide Hint";
+    });
+  }
 
   function fetchProfileData(id) {
     if (!id || id <= 0) {
@@ -111,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
           addLogLine(`[SUCCESS] IDOR vulnerability confirmed. Captured flag!`, "success");
 
           // Save solved state
-          localStorage.setItem("flag{idor_admin_profile_compromised}", "true");
+          localStorage.setItem("lab.idor.solved", "true");
           flagDisplayCard.classList.remove("hidden");
         } else {
           avatarImage.textContent = "👤";

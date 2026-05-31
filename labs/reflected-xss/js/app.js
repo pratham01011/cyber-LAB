@@ -14,9 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const copyFlagBtn = document.getElementById("copyFlagBtn");
   const closeModalBtn = document.getElementById("closeModalBtn");
   const domStatus = document.getElementById("domStatus");
+  const xssHintToggleBtn = document.getElementById("xssHintToggleBtn");
+  const xssHint = document.getElementById("xssHint");
 
   // Initial state helper
   const originalAlert = window.alert;
+
+  // Hint toggle for XSS lab
+  if (xssHintToggleBtn && xssHint) {
+    xssHintToggleBtn.addEventListener("click", () => {
+      const hidden = xssHint.classList.toggle("hidden");
+      xssHintToggleBtn.textContent = hidden ? "Show Hint" : "Hide Hint";
+    });
+  }
 
   // Intercept window.alert inside our scope
   window.alert = function (message) {
@@ -80,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     domStatus.className = "pulse-indicator error";
 
     // Set local storage
-    localStorage.setItem("flag{reflected_xss_solved}", "true");
+    localStorage.setItem("lab.reflected-xss.solved", "true");
 
     // Reveal Neon Flag Modal
     alertPayloadText.innerHTML = `Vulnerability triggered via active dialog alert verification message:<br/><code class="neon-code" style="color: var(--neon-pink); display: inline-block; margin-top: 8px;">alert(${payloadMsg || ''})</code>`;

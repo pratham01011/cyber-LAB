@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,15 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
 </head>
+
 <body>
   <div class="lab-container">
     <!-- Lab Header -->
     <header class="lab-header" id="labTopHeader">
       <div class="header-left">
         <a href="../../index.html" class="btn-back" id="backToDashBtn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
@@ -23,7 +26,8 @@
       </div>
       <div class="header-actions">
         <a href="../../docs/sql-injection-guide.pdf" target="_blank" class="btn btn-secondary" id="viewDocsBtn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
           </svg>
@@ -34,42 +38,45 @@
 
     <!-- Lab Content Area -->
     <main class="lab-workspace" id="labWorkspaceArea">
-      
+
       <!-- Educational Banner -->
       <section class="banner banner-warning" id="eduBanner">
         <div class="banner-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
             <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
             <line x1="12" y1="9" x2="12" y2="13"></line>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
         </div>
         <div class="banner-text">
-          <strong>EDUCATIONAL SIMULATION:</strong> This is a secure local sandbox environment. The SQL engine and database are mocked using client-side JavaScript to demonstrate parsing vulnerability concepts safely.
+          <strong>EDUCATIONAL SIMULATION:</strong> This is a secure local sandbox environment. The SQL engine and
+          database are mocked using client-side JavaScript to demonstrate parsing vulnerability concepts safely.
         </div>
       </section>
 
       <!-- Layout Grid -->
       <div class="workspace-grid">
-        
+
         <!-- Left Column: Vuln Login Form -->
         <section class="panel login-panel" id="loginFormPanel">
           <h2 class="panel-title" id="loginPanelTitle">Administrator Portal</h2>
           <p class="panel-subtitle" id="loginPanelSubtitle">Log in to control the system database parameters.</p>
-          
+
           <form id="vulnerableLoginForm" onsubmit="return false;">
             <div class="form-group" id="userGroup">
               <label for="username">Username</label>
               <input type="text" id="username" placeholder="e.g. admin" autocomplete="off">
             </div>
-            
+
             <div class="form-group" id="passGroup">
               <label for="password">Password</label>
               <input type="password" id="password" placeholder="••••••••" autocomplete="off">
             </div>
 
             <button type="submit" class="btn btn-primary btn-full" id="submitLoginBtn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0110 0v4"></path>
               </svg>
@@ -81,10 +88,13 @@
           <div class="info-card" id="sqliInstructions">
             <h4 id="infoCardTitle">Lab Objective</h4>
             <p id="infoCardText">
-              The login query concatenates your inputs directly. Use the classic SQL logic bypass payload to force the query assessment to evaluate to <code class="neon-code">TRUE</code>.
+              The login query concatenates your inputs directly. Use the classic SQL logic bypass payload to force the
+              query assessment to evaluate to <code class="neon-code">TRUE</code>.
             </p>
-            <div class="hint-box" id="sqliHint">
-              <strong>Hint:</strong> Inject <code class="neon-code">' OR '1'='1</code> in the Username field and leave password blank, then watch the live SQL viewer!
+            <button class="btn btn-secondary" id="sqliHintToggleBtn">Show Hint</button>
+            <div class="hint-box hidden" id="sqliHint">
+              <strong>Hint:</strong> Inject <code class="neon-code">' OR '1'='1</code> in the Username field and leave
+              password blank, then watch the live SQL viewer!
             </div>
           </div>
         </section>
@@ -126,7 +136,8 @@
             <div class="flag-glow-bg"></div>
             <div class="flag-content">
               <div class="flag-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                   <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
                   <line x1="4" y1="22" x2="4" y2="15"></line>
                 </svg>
@@ -142,7 +153,7 @@
             </div>
           </div>
         </section>
-        
+
       </div>
     </main>
 
@@ -153,4 +164,5 @@
 
   <script src="js/app.js"></script>
 </body>
+
 </html>
