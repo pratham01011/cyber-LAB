@@ -22,7 +22,7 @@ function renderCategoryGateways() {
       <div class="category-meta">
         ${getCategoryProgressHtml(labs)}
       </div>
-      <span class="gateway-link">Open in Labs section ?</span>
+      <span class="gateway-link">Open in Labs section →</span>
     `;
 
     categoryGateways.appendChild(card);
