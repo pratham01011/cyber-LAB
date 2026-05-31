@@ -119,9 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
           addLogLine(`[!] WARNING: Security mismatch! Administrative credentials retrieved without authorization.`, "warning");
           addLogLine(`[SUCCESS] IDOR vulnerability confirmed. Captured flag!`, "success");
 
-          // Save solved state
-          localStorage.setItem("lab.idor.solved", "true");
           flagDisplayCard.classList.remove("hidden");
+          markLabComplete("idor");
         } else {
           avatarImage.textContent = "👤";
           employeeCard.classList.remove("glow-admin");

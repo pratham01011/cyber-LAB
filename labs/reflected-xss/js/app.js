@@ -89,12 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
     domStatus.textContent = "COMPROMISED";
     domStatus.className = "pulse-indicator error";
 
-    // Set local storage
-    localStorage.setItem("lab.reflected-xss.solved", "true");
-
     // Reveal Neon Flag Modal
     alertPayloadText.innerHTML = `Vulnerability triggered via active dialog alert verification message:<br/><code class="neon-code" style="color: var(--neon-pink); display: inline-block; margin-top: 8px;">alert(${payloadMsg || ''})</code>`;
     xssAlertOverlay.classList.remove("hidden");
+    markLabComplete("reflected-xss");
   }
 
   // Helper: Append line to Terminal

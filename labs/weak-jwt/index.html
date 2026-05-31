@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weak JWT - CyberGuard Labs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
+</head>
+<body>
+  <div class="lab-container">
+    <header class="lab-header">
+      <div class="header-left">
+        <a href="../../labs.html?category=access-control" class="btn-back">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Labs
+        </a>
+        <h1>Weak JWT <span>Token Forgery Lab</span></h1>
+      </div>
+    </header>
+    <main class="lab-workspace">
+      <section class="banner banner-warning">
+        <div class="banner-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="banner-text"><strong>EDUCATIONAL SIMULATION:</strong> The API trusts JWT claims without verifying signatures.</div>
+      </section>
+      <div class="workspace-grid">
+        <section class="panel console-panel">
+          <h2 class="panel-title">JWT Token Console</h2>
+          <p class="panel-subtitle">Submit a bearer token to access the internal API.</p>
+          <div class="info-card">
+            <h4>Issued Token (user)</h4>
+            <pre id="sampleToken" class="code-preview"></pre>
+          </div>
+          <div class="form-group">
+            <label for="tokenInput">Bearer token</label>
+            <textarea id="tokenInput" class="lab-textarea" rows="4" autocomplete="off"></textarea>
+          </div>
+          <button class="btn btn-primary btn-full" id="submitTokenBtn">Validate Token</button>
+          <div class="info-card" style="margin-top:20px;">
+            <h4>Lab Objective</h4>
+            <p>Forge a token with <code class="neon-code">role: admin</code> and <code class="neon-code">alg: none</code>.</p>
+            <button class="btn btn-secondary" id="hintBtn">Show Hint</button>
+            <div class="hint-box hidden" id="hintBox"><strong>Hint:</strong> Base64-decode the payload, change role, re-encode with a none algorithm header.</div>
+          </div>
+        </section>
+        <section class="panel backend-panel">
+          <div class="api-response-container">
+            <h3 class="panel-title flex-title">API Response <span class="pulse-indicator success" id="apiStatus">401</span></h3>
+            <div class="json-code-box"><pre><code id="apiResponse">{"status":"unauthorized"}</code></pre></div>
+          </div>
+          <div class="terminal-container" style="margin-top:20px;">
+            <div class="terminal-header">
+              <div class="terminal-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+              <span class="terminal-title">JWT Validator</span>
+              <button class="btn-reset" id="resetBtn">Reset</button>
+            </div>
+            <div class="terminal-body" id="terminalLogs"><div class="log-line text-muted">[+] Validator online.</div></div>
+          </div>
+          <div class="flag-card hidden" id="flagCard">
+            <div class="flag-glow-bg"></div>
+            <div class="flag-content">
+              <div class="flag-details">
+                <h4>JWT forgery successful!</h4>
+                <p>Lab flag (local to this sandbox):</p>
+                <div class="flag-input-group">
+                  <input type="text" id="flagValue" value="flag{weak_jwt_alg_none_forgery}" readonly>
+                  <button class="btn btn-primary" id="copyBtn">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="lab-footer"><p>&copy; 2026 CyberGuard Sandbox Labs.</p></footer>
+  </div>
+  <script src="../../js/progress.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

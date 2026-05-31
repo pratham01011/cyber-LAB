@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberGuard - Vulnerability Labs</title>
+  <meta name="description"
+    content="Browse categorized web security labs including SQL Injection, XSS, and Access Control learning paths.">
+  <meta name="keywords"
+    content="web security, cybersecurity labs, SQL Injection, XSS, IDOR, access control, learning platform">
+  <meta name="author" content="CyberGuard">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+
+<body>
+  <div class="app-container">
+    <header class="navbar" id="mainHeader">
+      <a href="index.html" class="brand" id="brandLink">
+        <img src="assets/images/logo.svg" alt="CyberGuard Logo" width="36" height="36" id="brandLogo">
+        <span class="brand-text" id="brandTitle">CyberGuard Labs</span>
+      </a>
+
+      <nav class="nav-links" id="mainNavigation">
+        <a href="index.html" class="nav-link" id="navHome">Dashboard</a>
+        <a href="labs.html" class="nav-link active" id="navLabs">Labs</a>
+      </nav>
+
+      <div class="nav-stats" id="dashboardStats">
+        <div class="stat-badge" id="badgeTotal">
+          <div class="dot"></div>
+          <span id="badgeTotalText">Labs: 9</span>
+        </div>
+        <div class="stat-badge" id="badgeScore" style="border-color: rgba(16, 185, 129, 0.3);">
+          <span style="color: var(--neon-green);">Completed: <span id="completedCount">0</span>/9</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
+      <section class="hero-section labs-hero" id="heroIntro">
+        <p class="eyebrow">Learning Paths</p>
+        <h1>Explore labs by vulnerability category</h1>
+        <p class="hero-copy">Choose a track and launch hands-on challenges grouped by attack type.</p>
+      </section>
+
+      <section class="labs-section" id="labsSection">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Category Overview</p>
+            <h2>Find the right learning path</h2>
+            <p>Explore labs grouped by vulnerability category and open the lab list for the topic you want to master.</p>
+          </div>
+          <div class="overview-stats">
+            <article class="stat-card">
+              <span class="stat-label">Total categories</span>
+              <strong>3 Tracks</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Total labs</span>
+              <strong>9 Challenges</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Labs completed</span>
+              <strong><span id="completedCategoryCount">0</span> / 9</strong>
+            </article>
+          </div>
+        </div>
+
+        <div class="category-grid" id="categoryOverview"></div>
+
+        <section class="category-detail hidden" id="categoryDetail">
+          <div class="detail-header">
+            <div>
+              <button class="back-button" id="backToCategories">? All Categories</button>
+              <div class="category-meta-text">
+                <p class="eyebrow" id="categoryLabel">Category</p>
+                <h2 id="categoryTitle">Category Title</h2>
+                <p id="categoryDescription">Category description goes here.</p>
+              </div>
+            </div>
+            <div class="detail-summary">
+              <div class="progress-chip"><span id="categoryLabCount">0</span> labs</div>
+              <div class="progress-chip active"><span id="categorySolvedCount">0</span> completed</div>
+              <div class="progress-bar-shell">
+                <span class="progress-fill" id="categoryProgressFill" style="width: 0%;"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls-container detail-controls" id="detailControls">
+            <div class="search-wrapper" id="searchContainer">
+              <input type="text" id="labSearch" placeholder="Search labs within this category..." autocomplete="off">
+              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <div class="filter-wrapper" id="filterPanel">
+              <span class="filter-label" id="filterTitle">Difficulty:</span>
+              <button class="filter-btn active" data-difficulty="all" id="filterAll">All</button>
+              <button class="filter-btn" data-difficulty="easy" id="filterEasy">Easy</button>
+              <button class="filter-btn" data-difficulty="medium" id="filterMedium">Medium</button>
+              <button class="filter-btn" data-difficulty="hard" id="filterHard">Hard</button>
+            </div>
+          </div>
+
+          <div class="labs-list" id="labsList"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer" id="mainFooter">
+      <p>&copy; 2026 <span>CyberGuard Labs</span>. Designed for secure learning and hacking practice.</p>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/labs.js"></script>
+</body>
+
+</html>

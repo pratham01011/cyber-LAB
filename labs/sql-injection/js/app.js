@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sqlQueryStatus.textContent = "Compromised";
     sqlQueryStatus.className = "pulse-indicator error";
     flagDisplayCard.classList.remove("hidden");
-    localStorage.setItem("lab.sql-injection.solved", "true");
+    markLabComplete("sql-injection");
   }
 
   function showFailure() {

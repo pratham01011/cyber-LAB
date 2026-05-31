@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM XSS Playground - CyberGuard Labs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
+</head>
+<body>
+  <div class="lab-container">
+    <header class="lab-header">
+      <div class="header-left">
+        <a href="../../labs.html?category=xss" class="btn-back">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Labs
+        </a>
+        <h1>DOM XSS <span>Hash Router Lab</span></h1>
+      </div>
+    </header>
+    <main class="lab-workspace">
+      <section class="banner banner-warning">
+        <div class="banner-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="banner-text"><strong>EDUCATIONAL SIMULATION:</strong> A client-side router writes the URL hash directly into the DOM without sanitization.</div>
+      </section>
+      <div class="workspace-grid">
+        <section class="panel search-panel">
+          <h2 class="panel-title">Welcome Router</h2>
+          <p class="panel-subtitle">Manipulate the hash fragment to inject executable HTML into the welcome panel.</p>
+          <div class="form-group">
+            <label for="hashInput">Hash route</label>
+            <input type="text" id="hashInput" placeholder="#guest or payload..." autocomplete="off">
+          </div>
+          <button class="btn btn-primary btn-full" id="applyHashBtn">Apply Hash</button>
+          <div class="info-card">
+            <h4>Lab Objective</h4>
+            <p>Craft a hash payload that executes when the router renders the welcome message.</p>
+            <button class="btn btn-secondary" id="hintBtn">Show Hint</button>
+            <div class="hint-box hidden" id="hintBox"><strong>Hint:</strong> <code class="neon-code">&lt;img src=x onerror="alert(1)"&gt;</code></div>
+          </div>
+          <div class="search-results-container">
+            <h4 class="results-heading">Welcome Panel</h4>
+            <div class="results-output" id="welcomePanel"><p class="placeholder-text">Waiting for hash...</p></div>
+          </div>
+        </section>
+        <section class="panel debugger-panel">
+          <div class="dom-inspector-container">
+            <h3 class="panel-title flex-title">Live DOM Source <span class="pulse-indicator success" id="domStatus">Idle</span></h3>
+            <div class="dom-code-box"><pre><code id="liveDomSource">#<span id="domHighlightedQuery"></span></code></pre></div>
+          </div>
+          <div class="terminal-container">
+            <div class="terminal-header">
+              <div class="terminal-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+              <span class="terminal-title">Router Console</span>
+              <button class="btn-reset" id="resetBtn">Reset</button>
+            </div>
+            <div class="terminal-body" id="terminalLogs"><div class="log-line text-muted">[+] Hash router ready.</div></div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <div class="overlay hidden" id="flagOverlay">
+      <div class="flag-modal">
+        <div class="modal-header"><h3>DOM XSS Triggered!</h3><p>Hash fragment payload executed in the welcome panel.</p></div>
+        <div class="modal-body">
+          <div class="flag-reveal-box">
+            <span>Lab flag (local to this sandbox):</span>
+            <div class="flag-input-wrapper">
+              <input type="text" id="flagValue" value="flag{dom_xss_hash_injection}" readonly>
+              <button class="btn btn-primary" id="copyBtn">Copy</button>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-full" id="closeBtn" style="margin-top:15px;">Dismiss</button>
+        </div>
+      </div>
+    </div>
+    <footer class="lab-footer"><p>&copy; 2026 CyberGuard Sandbox Labs.</p></footer>
+  </div>
+  <script src="../../js/progress.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -28,17 +28,17 @@
 
       <nav class="nav-links" id="mainNavigation">
         <a href="index.html" class="nav-link active" id="navHome">Dashboard</a>
+        <a href="labs.html" class="nav-link" id="navLabs">Labs</a>
       </nav>
 
       <!-- Dashboard Interactive Stats -->
       <div class="nav-stats" id="dashboardStats">
         <div class="stat-badge" id="badgeTotal">
           <div class="dot"></div>
-          <span id="badgeTotalText">Labs: 3</span>
+          <span id="badgeTotalText">Labs: 9</span>
         </div>
         <div class="stat-badge" id="badgeScore" style="border-color: rgba(16, 185, 129, 0.3);">
-          <span style="color: var(--neon-green);" id="badgeScoreText">Completed: <span
-              id="completedCount">0</span>/3</span>
+          <span style="color: var(--neon-green);">Completed: <span id="completedCount">0</span>/9</span>
         </div>
       </div>
     </header>
@@ -55,33 +55,32 @@
         </p>
       </section>
 
-      <!-- Search and Filters Section -->
-      <section class="controls-container" id="controlsPanel">
-        <!-- Search input -->
-        <div class="search-wrapper" id="searchContainer">
-          <input type="text" id="labSearch" placeholder="Search vulnerabilities, titles, difficulty..."
-            autocomplete="off">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            id="searchSvg">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </div>
-
-        <!-- Filter buttons -->
-        <div class="filter-wrapper" id="filterPanel">
-          <span class="filter-label" id="filterTitle">Difficulty:</span>
-          <button class="filter-btn active" data-difficulty="all" id="filterAll">All</button>
-          <button class="filter-btn" data-difficulty="easy" id="filterEasy">Easy</button>
-          <button class="filter-btn" data-difficulty="medium" id="filterMedium">Medium</button>
-          <button class="filter-btn" data-difficulty="hard" id="filterHard">Hard</button>
+      <section class="dashboard-overview" id="dashboardOverview">
+        <div class="overview-stats dashboard-stats">
+          <article class="stat-card">
+            <span class="stat-label">Labs completed</span>
+            <strong><span id="dashboardCompletedCount">0</span> / 9</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Score</span>
+            <strong><span id="dashboardScorePercent">0</span>%</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Tracks</span>
+            <strong>3 Categories</strong>
+          </article>
         </div>
       </section>
 
-      <!-- Lab Grid System -->
-      <section class="labs-grid" id="labsGrid">
-        <!-- Rendered dynamically by js/app.js -->
+      <section class="labs-section dashboard-categories" id="dashboardCategories">
+        <div class="section-intro dashboard-intro">
+          <div>
+            <p class="eyebrow">Learning Tracks</p>
+            <h2>Choose a vulnerability category</h2>
+            <p>Open the labs section to browse challenges and launch sandboxes for each track.</p>
+          </div>
+        </div>
+        <div class="category-grid" id="categoryGateways"></div>
       </section>
     </main>
 
@@ -92,8 +91,10 @@
     </footer>
   </div>
 
-  <!-- Main JavaScript App -->
-  <script src="js/app.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/dashboard.js"></script>
 </body>
 
 </html>
